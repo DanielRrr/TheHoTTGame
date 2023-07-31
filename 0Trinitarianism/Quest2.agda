@@ -3,7 +3,9 @@ module 0Trinitarianism.Quest2 where
 open import 0Trinitarianism.Preambles.P2
 
 isEven : ℕ → Type
-isEven n = {!!}
+isEven zero = ⊤
+isEven (suc zero) = ⊥
+isEven (suc (suc n)) = isEven n
 
 {-
 This is a comment block.
@@ -22,7 +24,7 @@ private
     A B C : Type
 
 uncurry : (A → B → C) → (A × B → C)
-uncurry f x = {!!}
+uncurry f (fst , snd) = f fst snd
 
 curry : (A × B → C) → (A → B → C)
-curry f a b = {!!}
+curry f a b = f (a , b)
