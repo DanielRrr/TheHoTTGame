@@ -52,3 +52,31 @@ pathToFun {A} = J (λ B p → (A → B)) λ x → x
 
 pathToFunRefl : {A : Type} {x : A} → pathToFun (refl {x = A}) ≡ (λ x → x)
 pathToFunRefl {A} = JRefl ((λ B p → (A → B))) λ x → x
+
+endPt : {A : Type} {x y : A} → (B : A → Type) (p : x ≡ y) → B x → B y
+endPt {x = x} B = J (λ y p → B x → B y) (λ x → x)
+
+endPtRefl : {A : Type} {x : A} → (B : A → Type) → endPt B (refl {x = x}) ≡ (λ x → x)
+endPtRefl {x = x} B = JRefl ((λ y p → B x → B y)) (λ x → x)
+
+endPt' : {A : Type} {x y : A} → (B : A → Type) (p : x ≡ y) → B x → B y
+endPt' B p = pathToFun (cong B p)
+
+funExt : {A : Type} {B : A → Type} {f g : (a : A) → B a} →
+   ((a : A) → f a ≡ g a) → f ≡ g
+funExt p = λ i a → p a i
+
+funExt' : {A : Type} {B : A → Type} {f g : (a : A) → B a} → f ≡ g → (a : A) → f a ≡ g a
+funExt' p = λ a i → p i a
+
+sectionFunExt : {A : Type} {B : A → Type} {f g : (a : A) → B a} →
+  section (funExt' {A} {B} {f} {g}) funExt
+sectionFunExt h = refl
+
+retractFunExt : {A : Type} {B : A → Type} {f g : (a : A) → B a} →
+  retract (funExt' {A} {B} {f} {g}) funExt
+retractFunExt h = refl
+
+funExtPath : {A : Type} {B : A → Type} {f g : (a : A) → B a} →
+  (f ≡ g) ≡ ((a : A) → f a ≡ g a)
+funExtPath = isoToPath (iso funExt' funExt sectionFunExt retractFunExt)

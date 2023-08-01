@@ -9,4 +9,4 @@ open import Cubical.Foundations.Prelude
               ) public
 open import Cubical.Foundations.Isomorphism renaming ( Iso to _≅_ ) public
 open import Cubical.Foundations.Path public
-open import Cubical.HITs.S1 public
+open import Cubical.HITs.S1 renaming (elim to elim') public

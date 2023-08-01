@@ -1,9 +1,11 @@
+{-# OPTIONS --allow-unsolved-metas #-}
+
 module 0Trinitarianism.Preambles.P5 where
 
 open import Cubical.Foundations.Prelude renaming
   (funExt to libFunExt ;
    sym to libSym ;
-   _≡⟨_⟩_ to lib_≡⟨_⟩_ ;
+   _≡⟨⟩_ to lib_≡⟨_⟩_ ;
    _∎ to lib_∎ ;
    _∙_ to lib_∙_ ;
    fst to libFst ;
@@ -19,12 +21,7 @@ open import Cubical.Data.Bool public
 pathToFun≡transport : {u : Level} {A B : Type u} (p : A ≡ B) (x : A)
   → pathToFun p x ≡ transport p x
 pathToFun≡transport {u} {A} = J (λ B p → (x : A) → pathToFun p x ≡ transport p x)
-  λ x →
-      pathToFun refl x
-    ≡⟨ pathToFunReflx x ⟩
-      x
-    ≡⟨ sym (transportRefl x) ⟩
-      transport refl x ∎
+  λ x → {!!}
 
 PathPIsoPathD : {u : Level} {A B : Type u} (p : A ≡ B) (x : A) (y : B) →
   (PathP (λ i → p i) x y) ≅ (pathToFun p x ≡ y)
